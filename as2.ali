@@ -1,0 +1,150 @@
+V "GNAT Lib v3.15"
+P
+R nnvvnvvvnnnnnvvvvvvvvvvnvnnnnvnvnvnvnvnvnnnnvnnnvvnn
+
+U as2%b			as2.adb			ad33327a NE PK IL KU
+W ada%s			ada.ads			ada.ali
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.finalization.list_controller%s  a-filico.adb  a-filico.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.float_random%s  a-nuflra.adb	a-nuflra.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W system%s		system.ads		system.ali
+W system.finalization_implementation%s  s-finimp.adb  s-finimp.ali
+W system.finalization_root%s  s-finroo.adb	s-finroo.ali
+W system.img_int%s	s-imgint.adb		s-imgint.ali
+W system.parameters%s	s-parame.adb		s-parame.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.string_ops%s	s-strops.adb		s-strops.ali
+W system.task_info%s	s-tasinf.adb		s-tasinf.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.tasking.rendezvous%s  s-tasren.adb	s-tasren.ali
+W system.tasking.stages%s  s-tassta.adb		s-tassta.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+U as2%s			as2.ads			397cdcb2 EE NE PK IL KU
+
+D ada.ads		20020319081957 a0108083
+D a-calend.ads		20021024164812 83015fd2
+D a-caldel.ads		20021024164812 d5f7cf82
+D a-charac.ads		20020319081945 a61fb5a9
+D a-chlat1.ads		20020319081945 06a18501
+D a-except.ads		20021024164816 a9cbab76
+D a-finali.ads		20021024164817 d4be2e87
+D a-filico.ads		20021024164816 83058640
+D a-inteio.ads		20020319081945 58c81565
+D a-ioexce.ads		20020319081945 d52e128a
+D a-numeri.ads		20020319081945 24750733
+D a-nuflra.ads		20021024164819 847103fa
+D a-stream.ads		20021024164822 dbe6acb4
+D a-string.ads		20020319081945 6440c304
+D a-strmap.ads		20021024164823 e6fc9a3a
+D a-strunb.ads		20021024164823 d5fc5eb1
+D a-tags.ads		20021024164827 bc792b69
+D a-textio.ads		20021024164827 98d7a37c
+D a-tiinio.ads		20021024164830 d2c49634
+D as2.ads		20040920233228 397cdcb2
+D as2.adb		20040920233432 86dc5a48
+D interfac.ads		20020319082053 6e859da6
+D i-c.ads		20020319082052 fef7fe28
+D i-cstrea.ads		20021024164902 12f12cf1
+D system.ads		20021024164739 2f3adf03
+D s-exctab.ads		20021024164922 52f2ffc0
+D s-ficobl.ads		20021024164926 14416104
+D s-finimp.ads		20021024164926 ef65ab1e
+D s-finroo.ads		20021024164926 7e5e077b
+D s-imgint.ads		20021024164928 f1ba8463
+D s-osinte.ads		20030515220608 f99b8fcf
+D s-parame.ads		20021024164936 315d7d16
+D s-secsta.ads		20021024164937 e384df23
+D s-soflin.ads		20021024164937 14059e84
+D s-stache.ads		20021024164938 8fc58eaa
+D s-stalib.ads		20021024164938 76713122
+D s-stoele.ads		20020319082132 c6bef0ad
+D s-stratt.ads		20021024164938 9fdf8f81
+D s-strops.ads		20021024164938 1d376900
+D s-tasinf.ads		20021024164938 bbbd2b69
+D s-taspri.ads		20021024164739 26c755ad
+D s-taskin.ads		20021024164938 36912069
+D s-taprob.ads		20021024164938 0962e958
+D s-tpoben.ads		20021024164939 4dc7204d
+D s-tasren.ads		20021024164939 35499295
+D s-tassta.ads		20021024164939 2aa92874
+D s-unstyp.ads		20021024164939 05ad3732
+D unchconv.ads		20020319082153 1b7a14c5
+D unchdeal.ads		20020319082153 8ac9d15e
+X 1 ada.ads
+17K9*Ada 20e8 21|24r6 24r69 26r6 26r45 28r6 30r6 35r6 35r33 47r13 110r35
+. 146r39 180r9
+X 2 a-calend.ads
+39K13*Calendar 118e17 21|30r10
+X 9 a-inteio.ads
+19K13*Integer_Text_IO 21|26r10 26r49
+X 11 a-numeri.ads
+18K13*Numerics 29e17 21|28r10 47r17 110r39 146r43 180r13
+X 12 a-nuflra.ads
+52K22*Float_Random 100e30 21|28r19 47r26 110r48 146r52 180r22
+56R9*Generator 21|47r39
+60V13*Random 21|110r61 146r65
+63U14*Reset 21|180r35
+X 14 a-string.ads
+17K13*Strings 31e16 21|35r10 35r37
+X 16 a-strunb.ads
+42K21*Unbounded 382e26 21|35r18 35r45
+45R9*Unbounded_String 21|89r23 91r23
+59V13*To_Unbounded_String{45R9} 21|91r43 139r54 142r37 144r32 151r54 154r49
+. 156r32
+62V13*To_String{string} 21|143r27 155r27
+76V13*"&"{45R9} 21|139r52 142r35 151r52 154r43
+X 18 a-textio.ads
+50K13*Text_IO 441e16 21|24r10 24r73
+244U14*Put 21|176r9 184r17 189r17
+259U14*Put_Line 21|143r17 155r17
+X 19 a-tiinio.ads
+58U14*Get 21|177r9[21|19] 185r17[21|19] 190r17[21|19]
+X 20 as2.ads
+17K9*as2 21l5 21e8 21|40b14 203l5 203t8
+19U19*driver 21|42b11 201l5 201t11
+X 21 as2.adb
+47R9 G{12|56R9} 110r68 146r72 180r41
+49E14 FLAGCODE 49e54 50r13 58r39
+49n27 PASSIVE{49E14} 50r27 58r63 116r40 131r59 161r26 166r20
+49n36 REQUESTING{49E14} 50r41 113r28
+49n48 IN_CS{49E14} 50r58 122r28 126r55
+52N9 MAX_TASKS 57r33 58r25 63r60 77r24
+53N9 MAX_ITER 61r52
+54N9 RANDOM_SCALE_FACTOR 110r75 147r131
+57i9 turn{integer} 114r22 116r59 131r34 131r51 135m9 159r15 165m9
+58a9 flag 113m17 116r29 122m17 126r44 131r46 161r16 166m9
+61i17 iterations_user{integer} 102r47 190m21 191r28 191r52 198r53
+63i17 tasks_user{integer} 84r52 185m21 186r28 186r47 195r34
+65i17 seed_user{integer} 177m13 180r43
+69T19 single_task 73l13 73e24 76r31 81b19 169l5 169t16 197r41
+71Y23 start 95b32 104l29 104t34 198r34
+71i30 id_self{integer} 97r38 101r38
+71i52 iterations_in{integer}
+76P14 st_ptr(69T19) 77r38
+77a9 ptr 197m17 198r17
+84i25 n{integer} 118r53 126r28 131r26 138r56 150r56 159r29 162r32
+85i25 i{integer} 97m33 113r22 115r29 122r22 126r39 131r41 135r17 138r40 142r71
+. 150r40 154r83 166r14
+85i27 j{integer} 101m33 114m17 115r24 116r34 116m54 118m38 118r44 124m17
+. 126r24 126r35 126r49 128m25 128r30 131r21 159m9 161r21 162m17 162r23 165r17
+86i25 iterations{integer} 102m33 106r37
+89R9 tempString{16|45R9} 142m9 143r37 154m17 155r37
+91R9 tempString0{16|45R9} 139m25 139r40 142r23 144m17 151m25 151r40 154r31
+. 156m17
+95i39 id_self{integer}
+95i61 iterations_in{integer}
+106i13 iteration_index{integer}
+138i21 indent_index{integer}
+150i21 indent_index{integer}
+195i13 tasks_index{integer} 197r21 198r21 198r40
+

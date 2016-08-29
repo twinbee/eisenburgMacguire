@@ -1,0 +1,203 @@
+---------------------------------------------------------------
+-- Author:	Matthew Bennett
+-- Class:		CSC410 Burgess
+-- Date:		09-09-04 							Modified: 9-09-04
+-- Desc:		Assignment 2: EISENBURG / MACGUIRE ALGORITHM 
+--	a simple implementation of
+--	EISENBURG / MACGUIRE's algorithm which describes
+--	mutual exclusion, fairness, and deadlock avoidance
+--  n processes (TASKS) assuming fair hardware.
+--	EISENBURG / MACGUIRE ALGORITHM as described in
+--  "Algorithms for Mutual Exclusion", M. Raynal
+--  MIT PRESS Cambridge, 1986 ISBN: 0-262-18119-3
+
+----------------------------------------------------------------
+-- dependencies
+
+-- style note: the reason I sometimes "with" in but do not "use" packages
+--  are the same reasons a competent C++ programmer does--as a style
+--	convention--to avoid crowding of the namespace but more importantly
+--	to be very explicit where abstract data types and methods are coming from.
+--	for instance, the line 		 -- G : Ada.Numerics.Float_Random.Generator; 
+--	is much more explicit than -- G : Generator; 
+
+WITH ADA.TEXT_IO; 						USE ADA.TEXT_IO;
+
+WITH ADA.INTEGER_TEXT_IO; 		USE ADA.INTEGER_TEXT_IO;
+
+WITH ADA.NUMERICS.FLOAT_RANDOM; --USE ADA.NUMERICS.FLOAT_RANDOM;
+
+WITH ADA.CALENDAR; 						--USE ADA.CALENDAR;
+-- (provides cast: natural -> time for input into delay)
+
+--WITH ADA.STRINGS; USE ADA.STRINGS;
+	--we'll use unbounded strings instead! for ease of use
+WITH ADA.STRINGS.UNBOUNDED; USE ADA.STRINGS.UNBOUNDED;
+
+----------------------------------------------------------------
+-- specifications
+
+PACKAGE BODY as2 IS
+
+PROCEDURE driver IS
+
+--implementation of the driver and user interface
+--PLEASE NOTE: no global variables! these are local to the driver
+
+	G : Ada.Numerics.Float_Random.Generator;-- yields a random Natural after seed
+
+	TYPE FLAGCODE IS (PASSIVE, REQUESTING, IN_CS); --values taken by flags
+	FOR FLAGCODE USE (PASSIVE => 1, REQUESTING => 2, IN_CS => 3);
+
+	MAX_TASKS : CONSTANT := 100;
+	MAX_ITER  : CONSTANT := 100;
+	RANDOM_SCALE_FACTOR : CONSTANT := 1.0;
+		--used to increase "spread" of random delays
+
+	turn : Integer RANGE 0..MAX_TASKS 			:= 0; --called for by algorithm
+	flag : ARRAY(0..MAX_TASKS) OF FLAGCODE	:= (OTHERS => PASSIVE);--algorithm
+
+  --variables that are user defined at runtime--
+		iterations_user : Integer RANGE 0..MAX_ITER;
+  	-- iterations per task, defined at execution time
+		tasks_user  		: Integer RANGE 0..MAX_TASKS;
+		-- num tasks, defined at execution time
+		seed_user  		: Integer RANGE 0..Integer'LAST;
+		-- random seed, provided by user
+
+ --here comes the specification for our processes (TASKs)
+	TASK TYPE single_task IS
+	  -- "an ENTRY is a TASK's version of a PROCEDURE or FUNCTION"
+		ENTRY start (id_self : IN Integer; iterations_in : IN Integer);
+		--"ENTRY start is like the constructor for a task"
+	END single_task; 
+
+  --we have to use a pointer every time we throw off a new task
+	TYPE st_ptr IS ACCESS single_task; --reference type
+	ptr : ARRAY(0..MAX_TASKS) OF st_ptr; --how do we allocate dynamically?
+
+	-- "since TASK TYPE single_task is part of PROCEDURE dekker,
+	-- we must define it here or in a specifications file "
+	TASK BODY single_task IS
+
+				--variables defined at task creation time
+			n : Integer 		:= tasks_user; --to keep our code looking like the book's
+			i,j : Integer		:= 0;					-- identity, other task identity
+			iterations : Integer := 0;		-- # of iterations
+
+	--buffer used to hold the output for a task
+	tempString  : Unbounded_String;
+	--buffer used to make the spaces for indents
+	tempString0 : Unbounded_String := To_Unbounded_String("");
+
+	BEGIN --single_task
+	-- this is EISENBURG / MACGUIRE ALGORITHM implementation, the tasks themselves
+			ACCEPT Start (id_self : IN Integer; iterations_in : IN Integer) DO
+
+				i := id_self;
+
+				--j := 1-i MOD n; --supports loop around for next task 
+					-- thats how it usually works. but in ES/MCG, j is initialized to turn
+				j:=1-id_self; --reminder: not yet initialized, unknown
+				iterations := iterations_user;
+
+			END Start;
+
+	FOR iteration_index IN 1 .. iterations LOOP
+--!!-- start of Eigenberg's algorithm (optimized knuth's)
+	LOOP			
+
+	delay (Standard.Duration((Ada.Numerics.Float_Random.Random(G)	* RANDOM_SCALE_FACTOR) ) );
+		--give the other guys a fighting chance
+
+		flag(i) := REQUESTING;
+		j := turn;
+		WHILE (j /= i) LOOP --task: "check out everyone but myself"
+			IF (flag(j) /= PASSIVE) THEN j := turn;
+				--task: "if someone is active, their turn"
+				ELSE j := (j+1) MOD n; --"otherwise i'll keep checking until exhaustion"
+			END IF;
+		END LOOP;
+		
+		flag(i) := IN_CS; --"I've checked everyone, now I get to declare CS"
+
+		j := 0; --becomes index of checks for all other processes
+
+		WHILE (j < n AND (j = i OR flag(j) /= IN_CS) ) LOOP
+			--"check and make sure no one else has declared since I have"
+			j := j + 1;
+		END LOOP;
+
+	EXIT WHEN ((j >= n) AND (turn = i OR flag(turn) = PASSIVE));
+		--quit trying upon exhaustion and drop into the critical section
+	END LOOP;
+
+	turn := i; -- i=turn, flag[i]=IN-CS, critical section time
+
+	-- Critical Section
+		FOR indent_index IN 1..i*Integer(80-8)/n LOOP
+			tempString0 := tempString0 & To_UnBounded_String(" "); --build up indent
+		END LOOP; --indent building for
+
+	tempString := tempString0 & To_Unbounded_String(Integer'Image(i) & " in  CS");
+		Put_Line( To_String(tempString) );
+		tempString0 := To_UnBounded_String("");
+
+	  DELAY Standard.Duration( ( (Ada.Numerics.Float_Random.random(G)
+																+ RANDOM_SCALE_FACTOR ) ));
+	--"go ahead and try to interrupt me! I'll give you rand() x (a const) seconds"
+		
+		FOR indent_index IN 1..i*Integer(80-8)/n LOOP
+			tempString0 := tempString0 & To_UnBounded_String(" "); --build up indent
+		END LOOP; --indent building for
+
+		tempString := tempString0 &	To_Unbounded_String(Integer'Image(i) & " out CS");
+		Put_Line( To_String(tempString) );
+		tempString0 := To_UnBounded_String("");
+	-- end Critical Section
+
+	j := (turn + 1) MOD n; 
+	--loop around, next process
+	WHILE (flag(j) = PASSIVE) LOOP
+		j := (j+1) MOD n;
+	END LOOP;
+
+	turn := j; --turn over to the next guy, ensures fairness
+	flag(i) := PASSIVE; --set own flag to PASSIVE so others can continue
+
+END LOOP;
+END single_task;
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+-- implementation
+BEGIN --procedure driver; user input and task spawning
+
+	put("# random seed:       ");
+	get(seed_user); --to ensure a significantly random series, a seed is needed
+									-- to generate pseudo-random numbers
+
+ 	Ada.Numerics.Float_Random.Reset(G,seed_user); --like seed_rand(seed_user) in c
+
+	--sanity checking on the input
+	LOOP
+		put("# tasks[1-50]:       ");
+		get(tasks_user);
+		EXIT WHEN (tasks_user > 0 AND tasks_user <= 50);
+	END LOOP;
+	LOOP
+		put("# iterations[1-50]: ");
+		get(iterations_user);
+		EXIT WHEN (iterations_user > 0 AND iterations_user <= 50);
+	END LOOP;
+
+	-- For each task, start it and pass its id and number of iterations
+	FOR tasks_index IN 0 .. (tasks_user-1)
+	LOOP
+		ptr(tasks_index) := NEW single_task;
+		ptr(tasks_index).Start(tasks_index, iterations_user);
+	END LOOP;
+
+END driver;
+
+END as2;
